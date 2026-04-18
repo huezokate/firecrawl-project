@@ -31,8 +31,36 @@ npm run dev
 
 ## Deploy
 
-- **Frontend**: Cloudflare Pages — connect repo, set build command `npm run build`, output dir `dist`, add `VITE_API_URL` env var
-- **Backend**: Railway — connect repo, set root dir to `backend/`, add env vars from `.env.example`
+### Backend → Railway
+
+1. Create new Railway project → "Deploy from GitHub repo"
+2. Set **Root Directory** to `backend/`
+3. Railway auto-detects Python via nixpacks; `railway.toml` configures the start command
+4. Add environment variables in Railway dashboard:
+   - `GITHUB_TOKEN`
+   - `ANTHROPIC_API_KEY`
+   - `FIRECRAWL_API_KEY`
+5. Copy the Railway public URL (e.g. `https://firecrawl-api.up.railway.app`)
+
+### Frontend → Cloudflare Pages
+
+1. Create new Cloudflare Pages project → "Connect to Git"
+2. Set **Root Directory** to `frontend/`
+3. Build command: `npm run build`
+4. Build output directory: `dist`
+5. Add environment variable:
+   - `VITE_API_URL` = your Railway URL from above
+6. Deploy — Cloudflare builds and serves the React app globally
+
+### CLI deploy (optional)
+
+```bash
+# Backend
+cd backend && railway up
+
+# Frontend
+cd frontend && npx wrangler pages deploy dist --project-name firecrawl-explorer
+```
 
 ## Categories
 
