@@ -14,9 +14,15 @@ load_dotenv()
 
 app = FastAPI(title="Firecrawl Explorer API")
 
+ALLOWED_ORIGINS = [
+    "https://firecrawl-project.pages.dev",
+    "http://localhost:5173",
+    "http://localhost:4173",
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=ALLOWED_ORIGINS,
     allow_methods=["GET", "POST"],
     allow_headers=["*"],
 )
